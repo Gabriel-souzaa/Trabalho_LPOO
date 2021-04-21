@@ -6,11 +6,15 @@ public class Cadastro {
     private ArrayList<Double> media;
     private double mediaFinal;
     private double coeficiente;
+    private ArrayList materiasAno;
+    private ArrayList mediaMaterias;
     
     //Contructor
     public Cadastro(){
         this.arrayMatNot = new ArrayMateriaNota();
         this.media = new ArrayList();
+        this.materiasAno = new ArrayList();
+        this.mediaMaterias = new ArrayList();
     }
     
     //Cadastro de meterias e notas
@@ -37,18 +41,22 @@ public class Cadastro {
     //Buscando por um ano especifico
     public void anoEspecifico(int anoMateria){
         System.out.println("👉👉👉👉👉 \033[1;32m ANO ESPECÍFICO  \u001B[0m👈👈👈👈👈");
-        System.out.println("\033[1;33m✏ ✏ ✏ ✏ ✏ ✏ ✏ ✏ ✏ ✏ ✏ ✏ ✏ ✏\u001B[0m");
+        System.out.println("\033[1;33m✏ ✏ ✏ ✏ ✏ ✏ ✏ ✏ ✏ ✏ ✏ ✏ ✏ ✏ ✏ ✏\u001B[0m");
         
         System.out.println("");
         for(Materia materiass: this.arrayMatNot.getMaterias()){
             if(materiass.getAnoMateria() == anoMateria){
+                this.materiasAno.add(materiass.getMateria());
                 System.out.println("\033[1;34m*\u001B[0m Matéria: " + materiass.getMateria());
-                System.out.println("\033[1;32m*\u001B[0m Ano: " + materiass.getAnoMateria());
             
                 System.out.println();
             }
         }
-        System.out.println("\033[1;33m✏ ✏ ✏ ✏ ✏ ✏ ✏ ✏ ✏ ✏ ✏ ✏ ✏ ✏ \u001B[0m");
+        if(this.materiasAno.size() <= 0){
+            System.out.println("| Não existe nenhuma matéria do ano " + anoMateria + " |");
+            System.out.println();
+        }
+        System.out.println("\033[1;33m✏ ✏ ✏ ✏ ✏ ✏ ✏ ✏ ✏ ✏ ✏ ✏ ✏ ✏ ✏ ✏ \u001B[0m");
     }
     
     public void aprovadoReprovado(){
@@ -84,7 +92,7 @@ public class Cadastro {
             dividorCoeficiente +=1;
             
             //Materias
-            System.out.println("\033[1;34m*\u001B[0m Matéria: " + mt.materias.getMateria() + " Ano: " + mt.materias.getAnoMateria());
+            System.out.println("\033[1;34m*\u001B[0m Matéria: " + mt.materias.getMateria());
             
             //Calculo da media final
             this.mediaCalculo(mt.nota.getNp1(), mt.nota.getNp2(), mt.nota.getSub(), mt.nota.getExame(), "relatorio");
@@ -94,6 +102,10 @@ public class Cadastro {
             
             //Aprovação da Materia
             this.aprovacao(this.getMediaFinal());
+            
+            //Add medias no array para verificar qual é maior/menos
+            this.mediaMaterias.add(this.getMediaFinal());
+            //this.maiorMenorMedia();
             
             //Somando medias
             this.coeficiente = (this.coeficiente + this.getMediaFinal());
@@ -105,7 +117,12 @@ public class Cadastro {
         
         System.out.println("\033[1;33m✏ ✏ ✏ ✏ ✏ ✏ ✏ ✏ ✏ ✏ ✏ ✏ ✏ ✏ ✏ \u001B[0m");
         
+        //Maior e menor Matéria
+        this.maiorMenorMedia();
+        
         System.out.println();
+        
+        System.out.println("\033[1;33m✏ ✏ ✏ ✏ ✏ ✏ ✏ ✏ ✏ ✏ ✏ ✏ ✏ ✏ ✏ \u001B[0m");
         
         //Coeficiente
         System.out.println("👉👉👉👉👉 \033[1;32m COEFICIENTES  \u001B[0m👈👈👈👈👈");
@@ -154,5 +171,47 @@ public class Cadastro {
     
     public void setMedia(double media){
         this.mediaFinal = media;
+    }
+    
+    public void maiorMenorMedia(){
+        double maior = (double) this.mediaMaterias.get(0);
+        double menor = (double) this.mediaMaterias.get(0);
+        
+        String mensagemMaior = "Maior nota da matéria";
+        String mensagemMenor = "Menor nota da matéria";
+
+        for(int i = 1; i < this.mediaMaterias.size(); i++){
+            double valor = (double) this.mediaMaterias.get(i);
+            
+            if(maior < valor){
+                maior = valor;
+            }
+            if(menor > valor){
+                menor = valor;
+            }
+        }
+        
+        System.out.println();
+        
+        System.out.println("👉👉👉👉👉 \033[1;32m MAIOR E MENOR NOTA  \u001B[0m👈👈👈👈👈");
+        
+        System.out.println();
+        
+        for(MateriaNota mt: arrayMatNot.getMateriaNota()){
+            
+            this.mediaCalculo(mt.nota.getNp1(), mt.nota.getNp2(), mt.nota.getSub(), mt.nota.getExame(), "");
+            
+            if(this.getMediaFinal() == maior){
+                System.out.println("\033[1;34m*\u001B[0m Matéria: " + mt.materias.getMateria());
+                System.out.println("\033[1;34m" + mensagemMaior + "\u001B[0m");
+                
+                System.out.println();
+            }
+            if(this.getMediaFinal() == menor){
+                System.out.println("\033[1;34m*\u001B[0m Matéria: " + mt.materias.getMateria());
+                System.out.println("\033[1;33m" + mensagemMenor + "\u001B[0m");
+                System.out.println();
+            } 
+        }
     }
 }

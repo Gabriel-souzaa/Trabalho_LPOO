@@ -5,9 +5,9 @@ public class test {
         
         //Cadastro de materias/notas
         c.cadastroMateriaNota(new MateriaNota(new Materia("Estatistica",2021), new Notas(4.0,4.0,4.9,5.0)));
-        c.cadastroMateriaNota(new MateriaNota(new Materia("LPOO",2020), new Notas(9.0,3.0,8.9,7.0)));
-        c.cadastroMateriaNota(new MateriaNota(new Materia("Matematica",2021), new Notas(2.0,1.0,8.9,3.0)));
-        //c.cadastroMateriaNota(new MateriaNota(new Materia("Banco de dados",2021), new Notas(4.0,4.0,4.9,5.0)));
+        c.cadastroMateriaNota(new MateriaNota(new Materia("LPOO",2020), new Notas(9.0,10.0,8.9,8.0)));
+        //c.cadastroMateriaNota(new MateriaNota(new Materia("Matematica",2021), new Notas(2.0,1.0,8.9,3.0)));
+        c.cadastroMateriaNota(new MateriaNota(new Materia("Banco de dados",2021), new Notas(9.0,10.0,7.9,9.0)));
         
         //Imprmir todas Materias
         //c.listarMterias();
